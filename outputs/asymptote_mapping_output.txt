@@ -1,0 +1,282 @@
+==========================================================================================
+  ASYMPTOTE MAPPING: 7 -> 19 -> 37 -> 61 -> 91 nodes
+  Does suppression saturate? Where is the asymptote?
+==========================================================================================
+
+    7-node (r=1):  15 assignments, 1 interior, 6 boundary (86%), mean coord=3.43
+   19-node (r=2):  15 assignments, 7 interior, 12 boundary (63%), mean coord=4.42
+   37-node (r=3):  15 assignments, 19 interior, 18 boundary (49%), mean coord=4.86
+   61-node (r=4):  15 assignments, 37 interior, 24 boundary (39%), mean coord=5.11
+   91-node (r=5):  15 assignments, 61 interior, 30 boundary (33%), mean coord=5.27
+
+==========================================================================================
+  PART 1: STRUCTURAL PROPERTIES
+==========================================================================================
+
+  Nodes   r  Edges  Boundary%  Interior%  MeanCoord  MinCoord  Chiral+  Chiral0  Chiral-
+  ------------------------------------------------------------------------------------------
+      7   1     12     85.7%     14.3%       3.43         3        3        1        3
+     19   2     42     63.2%     36.8%       4.42         3        6        7        6
+     37   3     90     48.6%     51.4%       4.86         3       12       13       12
+     61   4    156     39.3%     60.7%       5.11         3       21       19       21
+     91   5    240     33.0%     67.0%       5.27         3       30       31       30
+
+==========================================================================================
+  PART 2: B31 vs T75 ACROSS ALL CELL SIZES
+==========================================================================================
+
+  7-node cell (r=1):
+         eps | B31_det B31_corr B31_supp | T75_det T75_corr T75_supp | det_gap supp_rat
+  ----------------------------------------------------------------------------------------
+       1e-01 |  71.9%   48.0%    1.9x |  95.5%   84.4%    6.4x |  23.6pp    3.3x  (0.9s)
+       5e-02 |  71.3%   47.5%    1.9x |  95.3%   84.1%    6.4x |  24.0pp    3.3x  (0.6s)
+       1e-02 |  72.0%   46.6%    1.9x |  95.5%   84.6%    6.4x |  23.5pp    3.4x  (0.4s)
+       5e-03 |  71.9%   48.3%    2.0x |  94.6%   84.2%    6.2x |  22.6pp    3.1x  (0.7s)
+       1e-03 |  71.9%   47.1%    1.7x |  96.0%   84.6%    6.4x |  24.1pp    3.7x  (1.0s)
+       5e-04 |  69.7%   48.6%    2.1x |  95.4%   84.8%    6.7x |  25.7pp    3.2x  (1.6s)
+       1e-04 |  86.2%   46.6%    2.7x |  95.6%   83.3%    5.6x |   9.3pp    2.1x  (1.5s)
+
+  19-node cell (r=2):
+         eps | B31_det B31_corr B31_supp | T75_det T75_corr T75_supp | det_gap supp_rat
+  ----------------------------------------------------------------------------------------
+       1e-01 |  82.5%   64.7%    2.8x |  96.3%   94.7%   19.0x |  13.8pp    6.7x  (12.4s)
+       5e-02 |  82.5%   64.6%    2.8x |  96.4%   94.8%   19.1x |  13.9pp    6.8x  (6.7s)
+       1e-02 |  83.1%   66.1%    2.9x |  96.4%   94.7%   18.8x |  13.3pp    6.4x  (2.7s)
+       5e-03 |  82.4%   65.0%    2.8x |  96.7%   94.8%   19.3x |  14.2pp    6.8x  (4.0s)
+       1e-03 |  82.3%   65.3%    2.8x |  97.1%   96.0%   24.5x |  14.9pp    8.6x  (3.3s)
+       5e-04 |  80.6%   62.7%    2.7x |  96.6%   95.3%   21.5x |  16.0pp    8.0x  (5.0s)
+       1e-04 |  84.5%   65.3%    2.7x |  96.6%   95.7%   22.8x |  12.1pp    8.5x  (4.6s)
+
+  37-node cell (r=3):
+         eps | B31_det B31_corr B31_supp | T75_det T75_corr T75_supp | det_gap supp_rat
+  ----------------------------------------------------------------------------------------
+       1e-01 |  84.3%   63.0%    2.7x |  98.2%   94.9%   19.8x |  13.9pp    7.4x  (21.8s)
+       5e-02 |  84.4%   62.8%    2.7x |  98.3%   95.0%   20.1x |  13.9pp    7.4x  (12.6s)
+       1e-02 |  84.1%   62.7%    2.7x |  98.5%   95.2%   21.1x |  14.4pp    7.8x  (4.9s)
+       5e-03 |  83.7%   62.3%    2.6x |  98.5%   95.2%   20.6x |  14.8pp    7.9x  (7.7s)
+       1e-03 |  83.4%   62.4%    2.7x |  98.3%   94.7%   19.2x |  14.9pp    7.1x  (2.1s)
+       5e-04 |  84.3%   61.7%    2.6x |  98.2%   94.3%   17.6x |  13.9pp    6.7x  (5.9s)
+       1e-04 |  80.8%   60.4%    2.5x |  98.3%   94.6%   17.8x |  17.5pp    7.0x  (9.4s)
+
+  61-node cell (r=4):
+         eps | B31_det B31_corr B31_supp | T75_det T75_corr T75_supp | det_gap supp_rat
+  ----------------------------------------------------------------------------------------
+       1e-01 |  86.0%   65.4%    2.9x |  98.4%   95.7%   23.3x |  12.4pp    8.1x  (38.0s)
+       5e-02 |  86.1%   65.6%    2.9x |  98.4%   95.7%   22.9x |  12.4pp    7.9x  (12.9s)
+       1e-02 |  86.4%   65.4%    2.9x |  98.3%   95.5%   22.2x |  11.9pp    7.7x  (3.5s)
+       5e-03 |  85.9%   65.1%    2.9x |  98.3%   95.3%   21.6x |  12.4pp    7.5x  (13.8s)
+       1e-03 |  86.3%   66.8%    3.0x |  98.2%   95.9%   24.3x |  11.9pp    8.1x  (11.2s)
+       5e-04 |  85.9%   65.0%    2.9x |  98.4%   95.5%   21.8x |  12.5pp    7.5x  (15.6s)
+       1e-04 |  87.2%   66.9%    3.0x |  98.1%   95.3%   19.8x |  10.9pp    6.6x  (15.0s)
+
+  91-node cell (r=5):
+         eps | B31_det B31_corr B31_supp | T75_det T75_corr T75_supp | det_gap supp_rat
+  ----------------------------------------------------------------------------------------
+       1e-01 |  89.4%   70.1%    3.3x |  98.2%   96.0%   25.3x |   8.7pp    7.6x  (49.9s)
+       5e-02 |  89.3%   69.9%    3.3x |  98.2%   96.1%   25.7x |   8.9pp    7.7x  (31.6s)
+       1e-02 |  89.2%   69.9%    3.3x |  98.1%   95.9%   24.8x |   8.8pp    7.5x  (12.7s)
+       5e-03 |  89.3%   69.5%    3.3x |  98.1%   95.8%   23.9x |   8.8pp    7.3x  (20.1s)
+       1e-03 |  88.5%   69.3%    3.3x |  97.9%   95.9%   24.1x |   9.4pp    7.3x  (16.3s)
+       5e-04 |  89.3%   69.7%    3.3x |  97.9%   96.0%   24.5x |   8.6pp    7.4x  (16.2s)
+       1e-04 |  90.6%   73.0%    3.8x |  98.3%   96.1%   26.0x |   7.7pp    6.9x  (19.2s)
+
+==========================================================================================
+  PART 3: SUPPRESSION vs CELL SIZE (the asymptote)
+==========================================================================================
+
+  eps = 1e-01:
+    Nodes |  B31_supp |  T75_supp |  T75/B31 |  det_gap
+        7 |     1.9x |     6.4x |    3.3x |   23.6pp
+       19 |     2.8x |    19.0x |    6.7x |   13.8pp
+       37 |     2.7x |    19.8x |    7.4x |   13.9pp
+       61 |     2.9x |    23.3x |    8.1x |   12.4pp
+       91 |     3.3x |    25.3x |    7.6x |    8.7pp
+
+    T75 saturation model (a + b/n): asymptote = 25.4x, R2 = 0.972
+    T75 log model (a + b*ln n):     slope = 6.95x/ln(n), R2 = 0.917
+    B31 saturation model (a + b/n): asymptote = 3.2x, R2 = 0.846
+    B31 log model (a + b*ln n):     slope = 0.47x/ln(n), R2 = 0.835
+    --> SATURATION model fits T75 better (asymptote ~ 25x)
+    Detection gap trend: NARROWING (slope=-3.12pp/step)
+
+  eps = 5e-02:
+    Nodes |  B31_supp |  T75_supp |  T75/B31 |  det_gap
+        7 |     1.9x |     6.4x |    3.3x |   24.0pp
+       19 |     2.8x |    19.1x |    6.8x |   13.9pp
+       37 |     2.7x |    20.1x |    7.4x |   13.9pp
+       61 |     2.9x |    22.9x |    7.9x |   12.4pp
+       91 |     3.3x |    25.7x |    7.7x |    8.9pp
+
+    T75 saturation model (a + b/n): asymptote = 25.6x, R2 = 0.970
+    T75 log model (a + b*ln n):     slope = 7.00x/ln(n), R2 = 0.917
+    B31 saturation model (a + b/n): asymptote = 3.2x, R2 = 0.863
+    B31 log model (a + b*ln n):     slope = 0.47x/ln(n), R2 = 0.866
+    --> SATURATION model fits T75 better (asymptote ~ 26x)
+    Detection gap trend: NARROWING (slope=-3.18pp/step)
+
+  eps = 1e-02:
+    Nodes |  B31_supp |  T75_supp |  T75/B31 |  det_gap
+        7 |     1.9x |     6.4x |    3.4x |   23.5pp
+       19 |     2.9x |    18.8x |    6.4x |   13.3pp
+       37 |     2.7x |    21.1x |    7.8x |   14.4pp
+       61 |     2.9x |    22.2x |    7.7x |   11.9pp
+       91 |     3.3x |    24.8x |    7.5x |    8.8pp
+
+    T75 saturation model (a + b/n): asymptote = 25.2x, R2 = 0.989
+    T75 log model (a + b*ln n):     slope = 6.74x/ln(n), R2 = 0.901
+    B31 saturation model (a + b/n): asymptote = 3.2x, R2 = 0.842
+    B31 log model (a + b*ln n):     slope = 0.46x/ln(n), R2 = 0.776
+    --> SATURATION model fits T75 better (asymptote ~ 25x)
+    Detection gap trend: NARROWING (slope=-3.09pp/step)
+
+  eps = 5e-03:
+    Nodes |  B31_supp |  T75_supp |  T75/B31 |  det_gap
+        7 |     2.0x |     6.2x |    3.1x |   22.6pp
+       19 |     2.8x |    19.3x |    6.8x |   14.2pp
+       37 |     2.6x |    20.6x |    7.9x |   14.8pp
+       61 |     2.9x |    21.6x |    7.5x |   12.4pp
+       91 |     3.3x |    23.9x |    7.3x |    8.8pp
+
+    T75 saturation model (a + b/n): asymptote = 24.7x, R2 = 0.981
+    T75 log model (a + b*ln n):     slope = 6.39x/ln(n), R2 = 0.858
+    B31 saturation model (a + b/n): asymptote = 3.1x, R2 = 0.806
+    B31 log model (a + b*ln n):     slope = 0.43x/ln(n), R2 = 0.810
+    --> SATURATION model fits T75 better (asymptote ~ 25x)
+    Detection gap trend: NARROWING (slope=-2.95pp/step)
+
+  eps = 1e-03:
+    Nodes |  B31_supp |  T75_supp |  T75/B31 |  det_gap
+        7 |     1.7x |     6.4x |    3.7x |   24.1pp
+       19 |     2.8x |    24.5x |    8.6x |   14.9pp
+       37 |     2.7x |    19.2x |    7.1x |   14.9pp
+       61 |     3.0x |    24.3x |    8.1x |   11.9pp
+       91 |     3.3x |    24.1x |    7.3x |    9.4pp
+
+    T75 saturation model (a + b/n): asymptote = 26.2x, R2 = 0.832
+    T75 log model (a + b*ln n):     slope = 6.15x/ln(n), R2 = 0.643
+    B31 saturation model (a + b/n): asymptote = 3.2x, R2 = 0.922
+    B31 log model (a + b*ln n):     slope = 0.54x/ln(n), R2 = 0.861
+    --> SATURATION model fits T75 better (asymptote ~ 26x)
+    Detection gap trend: NARROWING (slope=-3.23pp/step)
+
+  eps = 5e-04:
+    Nodes |  B31_supp |  T75_supp |  T75/B31 |  det_gap
+        7 |     2.1x |     6.7x |    3.2x |   25.7pp
+       19 |     2.7x |    21.5x |    8.0x |   16.0pp
+       37 |     2.6x |    17.6x |    6.7x |   13.9pp
+       61 |     2.9x |    21.8x |    7.5x |   12.5pp
+       91 |     3.3x |    24.5x |    7.4x |    8.6pp
+
+    T75 saturation model (a + b/n): asymptote = 24.4x, R2 = 0.863
+    T75 log model (a + b*ln n):     slope = 6.01x/ln(n), R2 = 0.754
+    B31 saturation model (a + b/n): asymptote = 3.1x, R2 = 0.804
+    B31 log model (a + b*ln n):     slope = 0.41x/ln(n), R2 = 0.898
+    --> SATURATION model fits T75 better (asymptote ~ 24x)
+    Detection gap trend: NARROWING (slope=-3.77pp/step)
+
+  eps = 1e-04:
+    Nodes |  B31_supp |  T75_supp |  T75/B31 |  det_gap
+        7 |     2.7x |     5.6x |    2.1x |    9.3pp
+       19 |     2.7x |    22.8x |    8.5x |   12.1pp
+       37 |     2.5x |    17.8x |    7.0x |   17.5pp
+       61 |     3.0x |    19.8x |    6.6x |   10.9pp
+       91 |     3.8x |    26.0x |    6.9x |    7.7pp
+
+    T75 saturation model (a + b/n): asymptote = 24.8x, R2 = 0.789
+    T75 log model (a + b*ln n):     slope = 6.31x/ln(n), R2 = 0.672
+    B31 saturation model (a + b/n): asymptote = 3.1x, R2 = 0.197
+    B31 log model (a + b*ln n):     slope = 0.32x/ln(n), R2 = 0.449
+    --> SATURATION model fits T75 better (asymptote ~ 25x)
+    Detection gap trend: FLAT (slope=-0.45pp/step)
+
+==========================================================================================
+  PART 4: TWO-SCALE COMPOSITION (S_torus = 35x from direct simulation)
+==========================================================================================
+
+  Nodes        eps |  S_L2(MC) |   S_L1+L2 |  S_torus*L2 |  S_torus*L1L2
+  ----------------------------------------------------------------------
+      7      1e-02 |     6.4x |    12.8x |       224x |         447x
+     19      1e-02 |    18.8x |    37.5x |       657x |        1313x
+     37      1e-02 |    21.1x |    42.2x |       738x |        1475x
+     61      1e-02 |    22.2x |    44.5x |       778x |        1557x
+     91      1e-02 |    24.8x |    49.5x |       867x |        1734x
+
+      7      1e-03 |     6.4x |    12.7x |       223x |         445x
+     19      1e-03 |    24.5x |    49.0x |       858x |        1716x
+     37      1e-03 |    19.2x |    38.4x |       673x |        1345x
+     61      1e-03 |    24.3x |    48.6x |       850x |        1699x
+     91      1e-03 |    24.1x |    48.2x |       844x |        1687x
+
+      7      1e-04 |     5.6x |    11.2x |       196x |         392x
+     19      1e-04 |    22.8x |    45.6x |       798x |        1596x
+     37      1e-04 |    17.8x |    35.5x |       622x |        1243x
+     61      1e-04 |    19.8x |    39.6x |       692x |        1385x
+     91      1e-04 |    26.0x |    52.0x |       910x |        1820x
+
+==========================================================================================
+  PART 5: IS THE ROTATION GAP FLAT ACROSS CELL SIZES?
+==========================================================================================
+
+         eps |     7n    19n    37n    61n    91n | mean    std     CV
+  ----------------------------------------------------------------------
+       1e-01 | 23.6pp 13.8pp 13.9pp 12.4pp  8.7pp |  14.5   4.93   0.340
+       5e-02 | 24.0pp 13.9pp 13.9pp 12.4pp  8.9pp |  14.6   5.05   0.345
+       1e-02 | 23.5pp 13.3pp 14.4pp 11.9pp  8.8pp |  14.4   4.94   0.343
+       5e-03 | 22.6pp 14.2pp 14.8pp 12.4pp  8.8pp |  14.5   4.55   0.313
+       1e-03 | 24.1pp 14.9pp 14.9pp 11.9pp  9.4pp |  15.0   4.96   0.330
+       5e-04 | 25.7pp 16.0pp 13.9pp 12.5pp  8.6pp |  15.3   5.72   0.373
+       1e-04 |  9.3pp 12.1pp 17.5pp 10.9pp  7.7pp |  11.5   3.33   0.290
+
+==========================================================================================
+  PART 6: BOUNDARY FRACTION vs SUPPRESSION
+  Does the boundary fraction explain the suppression curve?
+==========================================================================================
+
+  eps = 1e-02:
+  Nodes  Bound%  Inter% | B31_supp T75_supp  T75/B31
+  -------------------------------------------------------
+      7  85.7%  14.3% |    1.9x    6.4x    3.4x
+     19  63.2%  36.8% |    2.9x   18.8x    6.4x
+     37  48.6%  51.4% |    2.7x   21.1x    7.8x
+     61  39.3%  60.7% |    2.9x   22.2x    7.7x
+     91  33.0%  67.0% |    3.3x   24.8x    7.5x
+
+    Correlation(boundary%, T75_supp) = -0.961
+    Correlation(boundary%, B31_supp) = -0.883
+    Strong negative = boundary fraction drives suppression
+
+  eps = 1e-03:
+  Nodes  Bound%  Inter% | B31_supp T75_supp  T75/B31
+  -------------------------------------------------------
+      7  85.7%  14.3% |    1.7x    6.4x    3.7x
+     19  63.2%  36.8% |    2.8x   24.5x    8.6x
+     37  48.6%  51.4% |    2.7x   19.2x    7.1x
+     61  39.3%  60.7% |    3.0x   24.3x    8.1x
+     91  33.0%  67.0% |    3.3x   24.1x    7.3x
+
+    Correlation(boundary%, T75_supp) = -0.818
+    Correlation(boundary%, B31_supp) = -0.933
+    Strong negative = boundary fraction drives suppression
+
+==========================================================================================
+  SUMMARY: THE ASYMPTOTE
+==========================================================================================
+
+  At eps = 1e-03:
+
+    B31 suppression:  1.7x -> 2.8x -> 2.7x -> 3.0x -> 3.3x
+    T75 suppression:  6.4x -> 24.5x -> 19.2x -> 24.3x -> 24.1x
+    Detection gap:    24.1pp -> 14.9pp -> 14.9pp -> 11.9pp -> 9.4pp
+
+    T75 asymptote (n->inf): 26.2x
+    B31 asymptote (n->inf): 3.2x
+    Gap asymptote: 23.0x (ratio)
+
+    Two-scale at asymptote (S_torus=35x, f_sym=0.5):
+      S_L2 = 26.2x
+      S_L1+L2 = 52.4x
+      S_total = S_torus * S_L1L2 = 35 * 52.4 = 1835x
+
+  Runtime: 386.2s (6.4m)
+
+==========================================================================================

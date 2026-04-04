@@ -1,0 +1,341 @@
+================================================================================
+  BINARY-TERNARY HYBRID ARCHITECTURE SIMULATION
+  Paper 15 — Correct Gate Sequencing
+================================================================================
+
+  CRITICAL PHYSICS:
+    B31 layer: chirality = 0, NO rotation, static detection (tau=1)
+    T75 layer: chirality = {-1,0,+1}, full rotation, dynamic (tau=5)
+    B31 gates: {R, S, T} only (3 gates)
+    T75 gates: {R, S, T, F, P} (5 gates)
+    The coupling PROVIDES the rotation that B31 lacks
+
+  Seed: 42
+  S_torus (analytical): 20.0855x
+  Interface cost: 5% of eps_raw per kappa
+
+  Lattice cells:
+    7-node: 1 interior, 6 boundary, 12 edges
+    19-node: 7 interior, 12 boundary, 42 edges
+    37-node: 19 interior, 18 boundary, 90 edges
+
+================================================================================
+  PART 1: B31 BASELINE (static detection, 3-gate errors, no rotation)
+  This is what every existing qubit does.
+================================================================================
+
+  7-node cell:
+       eps_raw |   det_rate |  corr_rate |  eps_logical |  suppression |   errors
+    ---------------------------------------------------------------------------
+         1e-01 |     70.6% |     50.5% |    4.966e-02 |        2.0x |   35,132
+         1e-02 |     66.2% |     43.2% |    5.757e-03 |        1.7x |    3,549
+         1e-03 |     72.7% |     52.8% |    4.886e-04 |        2.0x |      725
+         1e-04 |     85.3% |     70.6% |    2.857e-05 |        3.5x |       68
+
+  19-node cell:
+       eps_raw |   det_rate |  corr_rate |  eps_logical |  suppression |   errors
+    ---------------------------------------------------------------------------
+         1e-01 |     81.1% |     64.3% |    3.564e-02 |        2.8x |   94,834
+         1e-02 |     78.2% |     58.8% |    4.139e-03 |        2.4x |    9,554
+         1e-03 |     81.0% |     62.1% |    3.700e-04 |        2.7x |    1,854
+         1e-04 |     87.0% |     64.3% |    3.474e-05 |        2.9x |      185
+
+  37-node cell:
+       eps_raw |   det_rate |  corr_rate |  eps_logical |  suppression |   errors
+    ---------------------------------------------------------------------------
+         1e-01 |     83.4% |     63.7% |    3.629e-02 |        2.8x |  185,092
+         1e-02 |     85.1% |     66.9% |    3.320e-03 |        3.0x |   18,575
+         1e-03 |     86.1% |     64.7% |    3.465e-04 |        2.9x |    3,627
+         1e-04 |     81.9% |     61.5% |    3.784e-05 |        2.6x |      364
+
+================================================================================
+  PART 2: T75 BASELINE (dynamic detection, 5-gate errors, full rotation)
+  Full merkabit — should match threshold_sweep_output.txt
+================================================================================
+
+  7-node cell:
+       eps_raw |   det_rate |  corr_rate |  eps_logical |  suppression |   errors
+    ---------------------------------------------------------------------------
+         1e-01 |     96.3% |     85.0% |    1.505e-02 |        6.6x |   35,009
+         1e-02 |     96.4% |     87.8% |    1.260e-03 |        7.9x |    3,607
+         1e-03 |     95.8% |     86.7% |    1.229e-04 |        8.1x |      649
+         1e-04 |     95.3% |     93.8% |    5.714e-06 |       17.5x |       64
+
+  19-node cell:
+       eps_raw |   det_rate |  corr_rate |  eps_logical |  suppression |   errors
+    ---------------------------------------------------------------------------
+         1e-01 |     96.8% |     96.2% |    3.845e-03 |       26.0x |   95,096
+         1e-02 |     96.7% |     95.4% |    4.579e-04 |       21.8x |    9,390
+         1e-03 |     95.9% |     94.3% |    5.632e-05 |       17.8x |    1,886
+         1e-04 |     96.3% |     94.1% |    5.789e-06 |       17.3x |      187
+
+  37-node cell:
+       eps_raw |   det_rate |  corr_rate |  eps_logical |  suppression |   errors
+    ---------------------------------------------------------------------------
+         1e-01 |     98.8% |     95.3% |    4.655e-03 |       21.5x |  184,950
+         1e-02 |     98.7% |     95.5% |    4.551e-04 |       22.0x |   18,606
+         1e-03 |     98.7% |     96.2% |    3.757e-05 |       26.6x |    3,692
+         1e-04 |     98.7% |     96.1% |    4.054e-06 |       24.7x |      388
+
+================================================================================
+  PART 3: B31 vs T75 — THE GAP
+  This gap is what the hybrid architecture bridges.
+================================================================================
+
+    Cell |    eps_raw |  B31 det |  B31 corr |  B31 supp |  T75 det |  T75 corr |  T75 supp |    gap
+  ----------------------------------------------------------------------------------------------------
+       7 |      1e-02 |   66.2% |    43.2% |     1.7x |   96.4% |    87.8% |     7.9x |   4.6x
+       7 |      1e-03 |   72.7% |    52.8% |     2.0x |   95.8% |    86.7% |     8.1x |   4.0x
+      19 |      1e-02 |   78.2% |    58.8% |     2.4x |   96.7% |    95.4% |    21.8x |   9.0x
+      19 |      1e-03 |   81.0% |    62.1% |     2.7x |   95.9% |    94.3% |    17.8x |   6.6x
+      37 |      1e-02 |   85.1% |    66.9% |     3.0x |   98.7% |    95.5% |    22.0x |   7.3x
+      37 |      1e-03 |   86.1% |    64.7% |     2.9x |   98.7% |    96.2% |    26.6x |   9.2x
+
+  The gap shows: T75's rotation provides the missing detection power.
+  B31 static detection catches ~70%. T75 dynamic catches ~95%.
+  The difference — ~25% of errors — is what the coupling recovers.
+
+================================================================================
+  PART 4: HYBRID KAPPA SWEEP (Monte Carlo, correct gate sequencing)
+  B31 errors -> B31 static detect -> route to T75 at kappa
+================================================================================
+
+  7-node cell:
+
+    eps_raw = 1e-02:
+      kappa |   det_rate |  corr_rate |       eps_mc |  eps_iface |    eps_final |     supp |  B31_corr |  T75_corr |  T75_route
+    -------------------------------------------------------------------------------------------------------------------
+       0.00 |     73.4% |     53.7% |    4.506e-03 |  0.000e+00 |    4.506e-03 |    2.2x |     1,830 |         0 |          0
+       0.10 |     72.4% |     53.0% |    4.720e-03 |  5.000e-05 |    4.770e-03 |    2.1x |     1,739 |       126 |        186
+       0.25 |     78.4% |     60.9% |    3.951e-03 |  1.250e-04 |    4.076e-03 |    2.5x |     1,847 |       305 |        415
+       0.50 |     80.9% |     64.0% |    3.497e-03 |  2.500e-04 |    3.747e-03 |    2.7x |     1,530 |       643 |        929
+       0.75 |     90.0% |     75.8% |    2.406e-03 |  3.750e-04 |    2.781e-03 |    3.6x |     1,641 |       997 |      1,383
+       1.00 |     95.5% |     82.2% |    1.800e-03 |  5.000e-04 |    2.300e-03 |    4.3x |     1,647 |     1,271 |      1,901
+
+    eps_raw = 1e-03:
+      kappa |   det_rate |  corr_rate |       eps_mc |  eps_iface |    eps_final |     supp |  B31_corr |  T75_corr |  T75_route
+    -------------------------------------------------------------------------------------------------------------------
+       0.00 |     70.9% |     46.8% |    5.271e-04 |  0.000e+00 |    5.271e-04 |    1.9x |       325 |         0 |          0
+       0.10 |     76.2% |     54.8% |    4.643e-04 |  5.000e-06 |    4.693e-04 |    2.1x |       374 |        20 |         30
+       0.25 |     80.8% |     62.3% |    3.529e-04 |  1.250e-05 |    3.654e-04 |    2.7x |       352 |        57 |         69
+       0.50 |     87.4% |     69.2% |    3.243e-04 |  2.500e-05 |    3.493e-04 |    2.9x |       376 |       133 |        172
+       0.75 |     90.3% |     73.5% |    2.543e-04 |  3.750e-05 |    2.918e-04 |    3.4x |       294 |       200 |        277
+       1.00 |     95.4% |     85.5% |    1.414e-04 |  5.000e-05 |    1.914e-04 |    5.2x |       303 |       279 |        378
+
+
+  19-node cell:
+
+    eps_raw = 1e-02:
+      kappa |   det_rate |  corr_rate |       eps_mc |  eps_iface |    eps_final |     supp |  B31_corr |  T75_corr |  T75_route
+    -------------------------------------------------------------------------------------------------------------------
+       0.00 |     80.4% |     63.4% |    3.708e-03 |  0.000e+00 |    3.708e-03 |    2.7x |     6,100 |         0 |          0
+       0.10 |     81.7% |     66.3% |    3.356e-03 |  5.000e-05 |    3.406e-03 |    2.9x |     5,931 |       329 |        371
+       0.25 |     83.5% |     67.8% |    3.140e-03 |  1.250e-04 |    3.265e-03 |    3.1x |     5,472 |       813 |        954
+       0.50 |     88.7% |     79.2% |    2.068e-03 |  2.500e-04 |    2.318e-03 |    4.3x |     5,945 |     1,531 |      1,738
+       0.75 |     92.4% |     86.4% |    1.381e-03 |  3.750e-04 |    1.756e-03 |    5.7x |     5,916 |     2,416 |      2,817
+       1.00 |     96.7% |     95.9% |    4.000e-04 |  5.000e-04 |    9.000e-04 |   11.1x |     5,699 |     3,220 |      3,600
+
+    eps_raw = 1e-03:
+      kappa |   det_rate |  corr_rate |       eps_mc |  eps_iface |    eps_final |     supp |  B31_corr |  T75_corr |  T75_route
+    -------------------------------------------------------------------------------------------------------------------
+       0.00 |     81.5% |     62.5% |    3.695e-04 |  0.000e+00 |    3.695e-04 |    2.7x |     1,170 |         0 |          0
+       0.10 |     78.7% |     64.2% |    3.700e-04 |  5.000e-06 |    3.750e-04 |    2.7x |     1,193 |        65 |         74
+       0.25 |     81.6% |     67.6% |    3.147e-04 |  1.250e-05 |    3.272e-04 |    3.1x |     1,099 |       149 |        177
+       0.50 |     89.5% |     81.2% |    1.921e-04 |  2.500e-05 |    2.171e-04 |    4.6x |     1,300 |       278 |        328
+       0.75 |     93.5% |     88.0% |    1.253e-04 |  3.750e-05 |    1.628e-04 |    6.1x |     1,253 |       497 |        554
+       1.00 |     96.7% |     94.9% |    5.053e-05 |  5.000e-05 |    1.005e-04 |    9.9x |     1,227 |       573 |        669
+
+
+  37-node cell:
+
+    eps_raw = 1e-02:
+      kappa |   det_rate |  corr_rate |       eps_mc |  eps_iface |    eps_final |     supp |  B31_corr |  T75_corr |  T75_route
+    -------------------------------------------------------------------------------------------------------------------
+       0.00 |     84.7% |     64.1% |    3.591e-03 |  0.000e+00 |    3.591e-03 |    2.8x |    11,853 |         0 |          0
+       0.10 |     85.7% |     66.9% |    3.319e-03 |  5.000e-05 |    3.369e-03 |    3.0x |    11,837 |       571 |        668
+       0.25 |     87.1% |     72.2% |    2.778e-03 |  1.250e-04 |    2.903e-03 |    3.4x |    11,871 |     1,491 |      1,651
+       0.50 |     91.1% |     79.1% |    2.065e-03 |  2.500e-04 |    2.315e-03 |    4.3x |    11,609 |     2,883 |      3,332
+       0.75 |     94.3% |     87.9% |    1.214e-03 |  3.750e-04 |    1.589e-03 |    6.3x |    11,878 |     4,377 |      4,999
+       1.00 |     98.4% |     95.8% |    4.141e-04 |  5.000e-04 |    9.141e-04 |   10.9x |    11,655 |     5,917 |      6,683
+
+    eps_raw = 1e-03:
+      kappa |   det_rate |  corr_rate |       eps_mc |  eps_iface |    eps_final |     supp |  B31_corr |  T75_corr |  T75_route
+    -------------------------------------------------------------------------------------------------------------------
+       0.00 |     83.2% |     65.0% |    3.541e-04 |  0.000e+00 |    3.541e-04 |    2.8x |     2,435 |         0 |          0
+       0.10 |     87.0% |     67.8% |    3.078e-04 |  5.000e-06 |    3.128e-04 |    3.2x |     2,285 |       115 |        129
+       0.25 |     90.0% |     75.9% |    2.386e-04 |  1.250e-05 |    2.511e-04 |    4.0x |     2,524 |       251 |        292
+       0.50 |     91.0% |     81.4% |    1.876e-04 |  2.500e-05 |    2.126e-04 |    4.7x |     2,424 |       619 |        686
+       0.75 |     96.1% |     88.8% |    1.103e-04 |  3.750e-05 |    1.478e-04 |    6.8x |     2,423 |       824 |        949
+       1.00 |     98.7% |     96.2% |    3.838e-05 |  5.000e-05 |    8.838e-05 |   11.3x |     2,426 |     1,184 |      1,326
+
+
+================================================================================
+  PART 5: OPTIMAL COUPLING KAPPA*
+================================================================================
+
+    Cell |    eps_raw |   kappa* |    supp@k* |   supp@k=0 |   supp@k=1 |  gain vs 0 |  gain vs 1
+  ------------------------------------------------------------------------------------------
+       7 |      1e-02 |     1.00 |      4.3x |      2.2x |      4.3x |      2.0x |      1.0x
+       7 |      1e-03 |     1.00 |      5.2x |      1.9x |      5.2x |      2.8x |      1.0x
+      19 |      1e-02 |     1.00 |     11.1x |      2.7x |     11.1x |      4.1x |      1.0x
+      19 |      1e-03 |     1.00 |      9.9x |      2.7x |      9.9x |      3.7x |      1.0x
+      37 |      1e-02 |     1.00 |     10.9x |      2.8x |     10.9x |      3.9x |      1.0x
+      37 |      1e-03 |     1.00 |     11.3x |      2.8x |     11.3x |      4.0x |      1.0x
+
+================================================================================
+  PART 6: TWO-SCALE MULTIPLICATIVE COMPOSITION
+  Scale 1 (per-unit torus) x Scale 2 (lattice correction)
+================================================================================
+
+  Scale 1 (intra-unit torus): operates per merkabit unit
+    S_torus = exp(d_unit/xi) = exp(3) = 20.09x
+    This runs BEFORE lattice correction. Independent of cell size.
+
+  Scale 2 (inter-unit lattice): from MC results above
+
+    Cell |    S_torus |   S_L2(T75 MC) |   S_L1+L2(f=0.5) |     S_combined |  S_comb(f=0.7)
+  -------------------------------------------------------------------------------------
+       7 |     20.1x |          8.1x |           16.3x |          327x |          545x
+      19 |     20.1x |         17.8x |           35.5x |          713x |         1189x
+      37 |     20.1x |         26.6x |           53.2x |         1069x |         1782x
+
+  S_torus sensitivity (37-node, f_sym=0.5):
+
+    S_torus =  10.0x  =>  S_total =      532x
+    S_torus =  15.0x  =>  S_total =      799x
+    S_torus =  20.1x  =>  S_total =     1069x
+    S_torus =  30.0x  =>  S_total =     1597x
+    S_torus =  50.0x  =>  S_total =     2662x
+
+================================================================================
+  PART 7: COMPATIBILITY CHECK
+  Does the Z62 coupling corrupt B31 computation?
+================================================================================
+
+  In the single-error model, false corrections require the decoder
+  to act on a node that has NO error. Since errors are injected one
+  at a time, the decoder only activates at actual error locations.
+  False correction rate = 0 by construction.
+
+  B31 fidelity under T75 protection:
+
+    7-node, eps=1e-02: B31 alone = 0.994243, with T75 = 0.997700, error reduction = 60.0%
+    7-node, eps=1e-03: B31 alone = 0.999511, with T75 = 0.999809, error reduction = 60.8%
+    19-node, eps=1e-02: B31 alone = 0.995861, with T75 = 0.999100, error reduction = 78.3%
+    19-node, eps=1e-03: B31 alone = 0.999630, with T75 = 0.999899, error reduction = 72.8%
+    37-node, eps=1e-02: B31 alone = 0.996680, with T75 = 0.999086, error reduction = 72.5%
+    37-node, eps=1e-03: B31 alone = 0.999654, with T75 = 0.999912, error reduction = 74.5%
+
+  T75 coupling ALWAYS improves fidelity, NEVER degrades it.
+  The algorithm sees only improved fidelity.
+
+================================================================================
+  PART 8: COMPARISON TABLE — CENTRAL RESULT OF PAPER 15
+================================================================================
+
+  At eps_raw = 1e-03, 37-node cell:
+
+  Architecture                             |  Threshold |    Suppression |        Overhead
+  ------------------------------------------------------------------------------------------
+  Surface code                             |        ~1% |  10^6 - 10^10x |  ~1000 phys/log
+  Pure B31 (qubit, no rotation)            |        ~1% |          2.9x |               0
+  Pure T75 L2 (merkabit, tau=5)            |       ~30% |         26.6x |               0
+  Pure T75 L1+L2 (merkabit, f=0.5)         |       ~30% |         53.2x |               0
+  Pure T75 L1+L2 (merkabit, f=0.7)         |       ~30% |         88.7x |               0
+  Hybrid (B31 + T75, kappa=1)              |       ~30% |         11.3x |       interface
+
+  WITH TWO-SCALE COMPOSITION (Scale 1 torus x Scale 2 lattice):
+
+  L0+L1+L2 (S_torus=10x, conservative)     |       ~30% |          532x |               0
+  L0+L1+L2 (S_torus=20x, analytical)       |       ~30% |         1069x |               0
+
+  Extended (all cell sizes, f_sym=0.5, S_torus from sensitivity range):
+
+    Cell |   B31 supp |     T75 L2 |    T75 L1+L2 |     L0+L1+L2 |     L0+L1+L2
+         |   (static) |  (dynamic) |      (f=0.5) |      (St=10) |      (St=20)
+  ---------------------------------------------------------------------------
+       7 |      2.0x |      8.1x |       16.3x |        163x |        327x
+      19 |      2.7x |     17.8x |       35.5x |        355x |        713x
+      37 |      2.9x |     26.6x |       53.2x |        532x |       1069x
+
+================================================================================
+  PART 9: WHAT THE ROTATION ACTUALLY DOES
+  The detection gap between B31 and T75 IS the rotation
+================================================================================
+
+  B31 (static, tau=1): each edge checks ONE gate pairing.
+    An error is invisible if the neighbour's (fixed) absent gate
+    doesn't match the error gate. ~30% of errors escape.
+
+  T75 (dynamic, tau=5): each edge checks ALL 5 gate pairings.
+    The rotation cycles the absent gate through all values.
+    An error becomes visible when the rotating neighbour's absent
+    gate aligns with the error gate. This happens within 5 steps
+    for counter-rotating neighbours. ~5% of errors escape.
+
+  The hybrid provides: B31 computation + T75 rotation = best of both.
+  B31 provides: readable output, qubit compatibility, algorithms.
+  T75 provides: the counter-rotation that makes detection dynamic.
+
+  Detection rate decomposition:
+
+    7-node: B31 det=72.7%, T75 det=95.8%, gap=23.2pp <- this is the rotation contribution
+    19-node: B31 det=81.0%, T75 det=95.9%, gap=14.9pp <- this is the rotation contribution
+    37-node: B31 det=86.1%, T75 det=98.7%, gap=12.6pp <- this is the rotation contribution
+
+================================================================================
+  SUMMARY — PAPER 15 CENTRAL RESULTS
+================================================================================
+
+  1. B31 BASELINE ESTABLISHED
+     Pure binary (every existing qubit) achieves:
+       Detection: 86.1% (static)
+       Correction: 64.7%
+       Suppression: 2.9x
+     This is the floor. No rotation, no standing wave.
+
+  2. T75 CONFIRMATION
+     Full merkabit matches threshold_sweep results:
+       Detection: 98.7% (dynamic)
+       Correction: 96.2%
+       Suppression: 26.6x (L2)
+
+  3. THE ROTATION IS THE MECHANISM
+     The gap between B31 and T75 detection rates IS the rotation.
+     B31's ~70% detection comes from static pentachoric closure.
+     T75's ~95% detection comes from dynamic rotation scanning.
+     The Z62 coupling provides B31 access to this rotation.
+
+  4. OPTIMAL COUPLING: kappa* = 1.0 (full coupling)
+     The interface cost (5% of eps_raw) never exceeds the
+     correction benefit from T75 dynamic detection.
+     The merkabit IS the optimal hybrid.
+
+  5. TWO-SCALE COMPOSITION (the central result):
+
+     Scale 1 (per-unit torus): S_torus = 20.1x
+     Scale 2 (pentachoric L2): S_L2 = 26.6x
+     Scale 2 (composite L1+L2, f=0.5): S_L1L2 = 53.2x
+     Combined: S_torus x S_L1L2 = 1069x (analytical)
+               10x x S_L1L2 = 532x (conservative)
+
+  6. THE COMPARISON TABLE:
+
+  Architecture                             |  Threshold |      Supp@1e-3 |     Overhead
+  -------------------------------------------------------------------------------------
+  Surface code                             |        ~1% |    10^6-10^10x |  ~1000 q/log
+  Qubit (B31 static, no rotation)          |        ~1% |          2.9x |            0
+  Merkabit L2 (T75 dynamic)                |       ~30% |         26.6x |            0
+  Merkabit L1+L2 (f=0.5)                   |       ~30% |         53.2x |            0
+  Merkabit L0+L1+L2 (St=10x, conserv.)     |       ~30% |          532x |            0
+  Merkabit L0+L1+L2 (St=20x, analyt.)      |       ~30% |         1069x |            0
+
+  7. WHAT NEEDS DIRECT VERIFICATION:
+     - S_torus = exp(3) ~ 20x: needs per-unit torus simulation
+     - B31 detection rate: this simulation provides the first
+       measurement (should be ~70%, matching tau=1 from Paper 14)
+     - The multiplicative composition is mathematics, not estimate
+
+  Total runtime: 44.8s
+
+================================================================================
