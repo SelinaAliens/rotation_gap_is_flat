@@ -1,0 +1,68 @@
+{
+  "summary": {
+    "geometry": "hexagonal_2d",
+    "physical_qubits": [
+      58,
+      59,
+      60,
+      61,
+      62,
+      71,
+      72,
+      77,
+      78,
+      79,
+      80,
+      81
+    ],
+    "n_shots": 4000,
+    "T_rounds": 20,
+    "mean_weight_total": 67.6825,
+    "var_weight_total": 65.0519567391848,
+    "fano_factor": 0.9611340706856987,
+    "sub_poissonian": true,
+    "per_round_F_mean": 0.44472718724786403,
+    "per_round_F_std": 0.04612363679392615,
+    "job_id": "d79o8qe1co6s73d7uh1g",
+    "backend": "ibm_strasbourg",
+    "circuit": "native"
+  },
+  "per_ancilla": [
+    {
+      "ancilla_idx": 0,
+      "phys_qubit": 72,
+      "fire_rate": 0.5718375,
+      "fano_factor": 1.0391475336208962
+    },
+    {
+      "ancilla_idx": 1,
+      "phys_qubit": 80,
+      "fire_rate": 0.631375,
+      "fano_factor": 0.9031950127702189
+    },
+    {
+      "ancilla_idx": 2,
+      "phys_qubit": 78,
+      "fire_rate": 0.642425,
+      "fano_factor": 1.2127052271298357
+    },
+    {
+      "ancilla_idx": 3,
+      "phys_qubit": 71,
+      "fire_rate": 0.535325,
+      "fano_factor": 0.47836717503758325
+    },
+    {
+      "ancilla_idx": 4,
+      "phys_qubit": 59,
+      "fire_rate": 0.4991,
+      "fano_factor": 0.5280999672879552
+    },
+    {
+      "ancilla_idx": 5,
+      "phys_qubit": 61,
+      "fire_rate": 0.5040625000000001,
+      "fano_factor": 0.4919418013213781
+    }
+  ]
+}
