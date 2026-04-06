@@ -1,0 +1,43 @@
+{
+  "results": [
+    {
+      "label": "ZP-ORF \u2014 paired (merkabit P gate active)",
+      "paired": true,
+      "q_fwd": 62,
+      "q_inv": 81,
+      "shots": 8192,
+      "zp_orf": 0.9683837890625,
+      "counts": {
+        "00": 7933,
+        "10": 98,
+        "01": 161
+      },
+      "job_id": "d7a04cnbf94c73bi2ivg",
+      "abstract_depth": 49,
+      "transpiled_depth": 1,
+      "backend": "ibm_strasbourg",
+      "timestamp": "2026-04-06T20:58:02.265015"
+    },
+    {
+      "label": "ZP-ORF \u2014 unpaired (control, P gate removed)",
+      "paired": false,
+      "q_fwd": 62,
+      "q_inv": 81,
+      "shots": 8192,
+      "zp_orf": 0.967041015625,
+      "counts": {
+        "00": 7922,
+        "01": 166,
+        "10": 101,
+        "11": 3
+      },
+      "job_id": "d7a04enbf94c73bi2j1g",
+      "abstract_depth": 49,
+      "transpiled_depth": 1,
+      "backend": "ibm_strasbourg",
+      "timestamp": "2026-04-06T20:58:08.398010"
+    }
+  ],
+  "ratio": 1.0013885382479173,
+  "backend": "ibm_strasbourg"
+}
