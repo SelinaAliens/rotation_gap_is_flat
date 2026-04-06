@@ -1,4 +1,4 @@
-kcp_version: "0.6"
+kcp_version: "0.14"
 project: "rotation_gap_is_flat"
 description: >
   Paper 15: The Binary-Ternary Hybrid Architecture. Every qubit is a merkabit
@@ -21,25 +21,25 @@ units:
       Entry point for Paper 15: defines the rotation gap (12.6 pp), two-scale
       error correction (35× torus, 26.6× torsion = 931–1862× combined),
       optimal coupling κ*_intra=0 / κ*_inter=1.0, and migration path.
-    scope: "paper summary and navigation"
-    audience: ["newcomer", "physicist", "engineer"]
-    validated: true
+    scope: global
+    audience: ["human", "developer"]
+    validated: "2026-04-06"
     hints:
       load_strategy: eager
       token_estimate: 400
-      priority: high
+      priority: critical
 
   # MANUSCRIPT
   - id: paper-manuscript
     path: paper/Paper_15_Binary_Ternary_Hybrid_Architecture_v4.docx
     intent: "Full Paper 15 manuscript — complete derivation and results"
-    scope: "paper manuscript"
-    audience: ["physicist", "mathematician", "reviewer"]
-    validated: true
+    scope: project
+    audience: ["human"]
+    validated: "2026-04-06"
     hints:
       load_strategy: lazy
       token_estimate: 1500
-      priority: high
+      priority: critical
     triggers:
       - "full paper"
       - "manuscript"
@@ -52,14 +52,14 @@ units:
       Main hybrid architecture simulation. Measures B31 vs T75 detection rates,
       optimal hybrid coupling κ*, two-scale suppression S_torus × S_L2,
       and π-lock contribution. Seed=42, deterministic.
-    scope: "hybrid simulation — primary"
-    audience: ["engineer", "physicist"]
-    validated: true
+    scope: module
+    audience: ["developer", "human"]
+    validated: "2026-04-06"
     depends_on: [readme]
     hints:
       load_strategy: lazy
       token_estimate: 250
-      priority: high
+      priority: critical
     triggers:
       - "binary ternary hybrid"
       - "rotation gap"
@@ -75,14 +75,14 @@ units:
       Sweeps B31 vs T75 detection rate across 14 error rates spanning four orders
       of magnitude. Confirms rotation gap is flat (CV < 3%) — architectural,
       not noise-dependent. Runtime ~160s.
-    scope: "scale separation — flatness verification"
-    audience: ["physicist", "engineer"]
-    validated: true
+    scope: module
+    audience: ["human", "developer"]
+    validated: "2026-04-06"
     depends_on: [hybrid-simulation]
     hints:
       load_strategy: lazy
       token_estimate: 200
-      priority: high
+      priority: critical
     triggers:
       - "flat"
       - "CV < 3%"
@@ -93,14 +93,14 @@ units:
   - id: asymptote-mapping
     path: simulations/asymptote_mapping.py
     intent: "Extends to 61/91 node systems — maps saturation behaviour and asymptote of suppression"
-    scope: "scale separation — asymptote"
-    audience: ["physicist"]
-    validated: true
+    scope: module
+    audience: ["human"]
+    validated: "2026-04-06"
     depends_on: [scale-separation-sweep]
     hints:
       load_strategy: lazy
       token_estimate: 200
-      priority: medium
+      priority: supplementary
     triggers:
       - "asymptote"
       - "saturation"
@@ -113,13 +113,13 @@ units:
     intent: >
       Direct measurement of S_torus = 35× intra-unit toroidal correction factor
       on the Eisenstein torus. Provides Scale 1 of the two-scale correction.
-    scope: "Eisenstein torus — Scale 1 measurement"
-    audience: ["physicist", "engineer"]
-    validated: true
+    scope: module
+    audience: ["human", "developer"]
+    validated: "2026-04-06"
     hints:
       load_strategy: lazy
       token_estimate: 200
-      priority: high
+      priority: critical
     triggers:
       - "S_torus"
       - "35x"
@@ -134,13 +134,13 @@ units:
       Ouroboros cycle temporal-spatial equivalence — proves the time dimension
       of the closed cycle is equivalent to the spatial Z62 coupling channel.
       Establishes that temporal correction is the same as spatial torsion correction.
-    scope: "temporal-spatial bridge"
-    audience: ["physicist", "mathematician"]
-    validated: true
+    scope: module
+    audience: ["human"]
+    validated: "2026-04-06"
     hints:
       load_strategy: lazy
       token_estimate: 200
-      priority: medium
+      priority: supplementary
     triggers:
       - "Ouroboros"
       - "temporal spatial"
@@ -151,14 +151,14 @@ units:
   - id: output-hybrid
     path: outputs/binary_ternary_hybrid_output.txt
     intent: "Reference output: B31=86.1%, T75=98.7%, rotation gap=12.6 pp, optimal κ*"
-    scope: "simulation output"
-    audience: ["engineer"]
-    validated: true
+    scope: module
+    audience: ["developer"]
+    validated: "2026-04-06"
     depends_on: [hybrid-simulation]
     hints:
       load_strategy: lazy
       token_estimate: 150
-      priority: medium
+      priority: supplementary
     triggers:
       - "86.1"
       - "98.7"
@@ -168,46 +168,46 @@ units:
   - id: output-scale-separation
     path: outputs/scale_separation_sweep_output.txt
     intent: "Reference output from 14-point scale separation sweep (CV < 3% flatness)"
-    scope: "simulation output"
-    audience: ["engineer"]
-    validated: true
+    scope: module
+    audience: ["developer"]
+    validated: "2026-04-06"
     hints:
       load_strategy: lazy
       token_estimate: 150
-      priority: low
+      priority: reference
 
   - id: output-asymptote
     path: outputs/asymptote_mapping_output.txt
     intent: "Reference output from asymptote mapping (61/91 node saturation)"
-    scope: "simulation output"
-    audience: ["engineer"]
-    validated: true
+    scope: module
+    audience: ["developer"]
+    validated: "2026-04-06"
     hints:
       load_strategy: lazy
       token_estimate: 150
-      priority: low
+      priority: reference
 
   - id: output-eisenstein
     path: outputs/eisenstein_torus_output.txt
     intent: "Reference output from Eisenstein torus simulation (S_torus = 35×)"
-    scope: "simulation output"
-    audience: ["engineer"]
-    validated: true
+    scope: module
+    audience: ["developer"]
+    validated: "2026-04-06"
     hints:
       load_strategy: lazy
       token_estimate: 150
-      priority: low
+      priority: reference
 
   - id: output-temporal-spatial
     path: outputs/temporal_spatial_bridge_output.txt
     intent: "Reference output from temporal-spatial bridge simulation"
-    scope: "simulation output"
-    audience: ["engineer"]
-    validated: true
+    scope: module
+    audience: ["developer"]
+    validated: "2026-04-06"
     hints:
       load_strategy: lazy
       token_estimate: 150
-      priority: low
+      priority: reference
 
 # ─── RELATIONSHIPS ────────────────────────────────────────────────────────────
 relationships:
