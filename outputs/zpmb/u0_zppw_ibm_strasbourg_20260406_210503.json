@@ -1,0 +1,65 @@
+{
+  "results": [
+    {
+      "label": "U\u2080 direct (measure q+, q-)",
+      "shots": 8192,
+      "counts": {
+        "00": 5655,
+        "10": 1197,
+        "11": 237,
+        "01": 1103
+      },
+      "job_id": "d7a07kqn8nvs73e21rg0",
+      "abstract_depth": 25,
+      "transpiled_depth": 6,
+      "backend": "ibm_strasbourg",
+      "layout": [
+        62,
+        81
+      ],
+      "timestamp": "2026-04-06T21:04:57.678131"
+    },
+    {
+      "label": "ZP-PPW (parity witness, ancilla=72)",
+      "shots": 8192,
+      "counts": {
+        "000": 982,
+        "101": 1567,
+        "100": 1915,
+        "111": 1532,
+        "011": 885,
+        "110": 927,
+        "001": 252,
+        "010": 132
+      },
+      "job_id": "d7a07mnbf94c73bi2lvg",
+      "abstract_depth": 28,
+      "transpiled_depth": 13,
+      "backend": "ibm_strasbourg",
+      "layout": [
+        62,
+        81,
+        72
+      ],
+      "timestamp": "2026-04-06T21:05:03.604371"
+    }
+  ],
+  "analysis": {
+    "ideal_zppw": 0.4474054901300964,
+    "hardware_zppw": -0.450439453125,
+    "ideal_zz_corr": 0.44740549013009645,
+    "ideal_probs": {
+      "00": 0.6967777645799601,
+      "01": 0.12013986411769201,
+      "10": 0.1561573908172601,
+      "11": 0.026924980485088394
+    },
+    "hardware_probs": {
+      "00": 0.6903076171875,
+      "10": 0.1461181640625,
+      "11": 0.0289306640625,
+      "01": 0.1346435546875
+    }
+  },
+  "backend": "ibm_strasbourg"
+}
