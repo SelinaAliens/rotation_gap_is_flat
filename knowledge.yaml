@@ -1,12 +1,14 @@
 kcp_version: "0.14"
 project: "rotation_gap_is_flat"
 description: >
-  Paper 15: The Binary-Ternary Hybrid Architecture. Every qubit is a merkabit
-  restricted to the B31 binary sector of PSL(2,7). This paper measures the rotation
-  gap (12.6 pp) between B31 (86.1%) and T75 (98.7%) detection rates, shows it is
-  flat across four orders of magnitude of error rate (CV < 3%), demonstrates two-scale
-  error suppression (931–1862×), and provides a zero-overhead migration path from
-  qubit to ternary computation. NOT YET ON ZENODO as of 2026-04-06.
+  Paper 3 of the Merkabit series: The Rotation Gap Is Not An Error. Every qubit is a
+  merkabit restricted to the B31 binary sector of PSL(2,7). This paper measures the
+  rotation gap (12.6 pp) between B31 (86.1%) and T75 (98.7%) detection rates, shows it
+  is flat across four orders of magnitude of error rate (CV < 3%), demonstrates two-scale
+  error suppression (931–1862×), and provides a zero-overhead migration path from qubit to
+  ternary computation. The published PDF (Paper_3_The_Rotation_Gap_Is_Not_An_Error_v1.pdf)
+  landed 2026-04-06; the DOCX (Paper_15_Binary_Ternary_Hybrid_Architecture_v4.docx)
+  is a prior working title for the same content.
 version: "1.0"
 created: "2026-04-06"
 maintainer: "Selina Stenberg"
@@ -29,21 +31,44 @@ units:
       token_estimate: 400
       priority: critical
 
-  # MANUSCRIPT
-  - id: paper-manuscript
+  # MANUSCRIPT — PUBLISHED PDF (primary)
+  - id: paper-pdf
+    path: paper/Paper_3_The_Rotation_Gap_Is_Not_An_Error_v1.pdf
+    intent: >
+      Published PDF of Paper 3: The Rotation Gap Is Not An Error. Primary orientation
+      unit. Establishes that the 12.6 pp gap between B31 (86.1%) and T75 (98.7%)
+      detection rates is an architectural property of PSL(2,7), not a simulation
+      artefact, and demonstrates zero-overhead qubit→merkabit migration.
+    scope: project
+    audience: ["human"]
+    validated: "2026-04-06"
+    hints:
+      load_strategy: eager
+      token_estimate: 1500
+      priority: critical
+    triggers:
+      - "Paper 3"
+      - "rotation gap"
+      - "full paper"
+      - "manuscript"
+      - "read the paper"
+      - "not an error"
+
+  # MANUSCRIPT — PRIOR WORKING DRAFT (DOCX)
+  - id: paper-manuscript-docx
     path: paper/Paper_15_Binary_Ternary_Hybrid_Architecture_v4.docx
-    intent: "Full Paper 15 manuscript — complete derivation and results"
+    intent: "Prior working-title DOCX draft (Binary-Ternary Hybrid Architecture v4) — superseded by the published PDF"
     scope: project
     audience: ["human"]
     validated: "2026-04-06"
     hints:
       load_strategy: lazy
       token_estimate: 1500
-      priority: critical
+      priority: reference
     triggers:
-      - "full paper"
-      - "manuscript"
-      - "read the paper"
+      - "docx"
+      - "working draft"
+      - "binary ternary hybrid architecture"
 
   # CORE SIMULATIONS
   - id: hybrid-simulation
