@@ -112,13 +112,56 @@ structure that Z-basis measurement alone cannot capture.
 
 ---
 
+## Experiment 4: ZP-GPW — Geometric Phase Witness (Hadamard test)
+
+**Circuit:** H(anc) → ctrl-U₀_n → [H or Sdg+H](anc) → measure anc
+
+Measures ⟨00|U₀_n|00⟩ = |M₀₀|e^(iδ) via the Hadamard test:
+- X-basis: ⟨X_anc⟩ = Re(M₀₀) = |M₀₀| cos(δ)
+- Y-basis: ⟨Y_anc⟩ = Im(M₀₀) = |M₀₀| sin(δ)
+
+Controlled-Rz and controlled-Rx use native CX(72→62) and CX(72→81) directions.
+Two runs at n=4 and n=6 ouroboros steps.
+
+**Results:**
+
+| n | transpiled depth | ⟨X⟩ ideal | ⟨X⟩ hw | ⟨Y⟩ ideal | ⟨Y⟩ hw | δ_ideal | δ_hw | Δδ |
+|---|-----------------|----------|--------|----------|--------|--------|------|-----|
+| 4 | 133 | +0.856 | +0.079 | −0.310 | −0.508 | −19.9° | −81.2° | −61.3° |
+| 6 | 197 | +0.719 | −0.118 | −0.497 | −0.445 | −34.6° | −104.9° | −70.2° |
+
+**Error model:**
+
+Fitting Δδ = C + ε·depth across both runs:
+- ε = 0.14°/layer (depth-dependent, from gate errors)
+- C = 42.8° (constant offset, from systematic hardware phase error on anc=72)
+
+The dominant contribution is the ~43° constant offset — reducing circuit depth alone
+cannot bring the total phase error below ~43°. Likely sources: always-on ZZ coupling
+between qubits 62/72/81, or systematic ECR cross-resonance phase drift.
+
+**What the data confirms:**
+
+- Im(M₀₀) < 0 at both n=4 and n=6 (Y-component has correct sign in both runs)
+- Phase accumulates in the correct direction with increasing n:
+  Δδ_hw = −23.7° (n=4→6) vs Δδ_ideal = −14.7° — correct sign, ~1.6× over-rotation
+- |M₀₀|_hw ≈ 0.51 at n=4, 0.46 at n=6 — consistent with T₂ decoherence at these depths
+
+**Limitation:** Quantitative phase extraction Δδ ≈ 61–70° error) requires ZNE error
+mitigation or a calibrated phase correction for ancilla qubit 72. The Y-component
+alone is the honest reportable result from current hardware runs.
+
+---
+
 ## Summary
 
-Three results from real IBM Eagle r3 hardware on 6 April 2026:
+Four experiments from real IBM Eagle r3 hardware on 6 April 2026:
 
 1. **ZP-ORF = 0.968** — ouroboros reversibility confirmed (threshold: 0.90)
 2. **U₀ state distribution** matches ideal to 2% across all four basis states
 3. **⟨ZZ⟩ = +0.44, ⟨XX⟩ = −0.45** — π-lock and phase anti-correlation confirmed
+4. **ZP-GPW** — geometric phase accumulation direction confirmed; quantitative
+   extraction limited by ~43° systematic hardware phase offset on ancilla qubit 72
 
 Combined with the sub-Poissonian Fano factor (F = 0.961, Paper 3), these
 results provide the first multi-observable hardware validation of the merkabit
@@ -132,11 +175,14 @@ framework on real quantum hardware.
 experiments/
   run_zpmb.py         — ZP-ORF: paired vs unpaired (Experiment 1)
   run_u0.py           — U₀ direct readout + ZP-PPW Hadamard test (Experiments 2–3)
+  run_zpgpw.py        — ZP-GPW geometric phase witness (Experiment 4)
 
 outputs/zpmb/
-  zpmb_zporf_ibm_strasbourg_20260406_205808.json   — Experiment 1 raw data
-  u0_zppw_ibm_strasbourg_20260406_210144.json      — Experiment 2 (first run)
-  u0_zppw_ibm_strasbourg_20260406_210503.json      — Experiments 2–3 (native ZP-PPW)
+  zpmb_zporf_ibm_strasbourg_20260406_205808.json      — Experiment 1 raw data
+  u0_zppw_ibm_strasbourg_20260406_210144.json         — Experiment 2 (first run)
+  u0_zppw_ibm_strasbourg_20260406_210503.json         — Experiments 2–3 (native ZP-PPW)
+  zpgpw_n6_ibm_strasbourg_20260406_211806.json        — Experiment 4 (n=6)
+  zpgpw_n4_ibm_strasbourg_20260406_212635.json        — Experiment 4 (n=4)
 ```
 
 ---
